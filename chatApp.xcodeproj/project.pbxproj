@@ -9,25 +9,29 @@
 /* Begin PBXBuildFile section */
 		4A9B67EFC61FBE4626367811 /* Pods_chatApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D6F5B15A18F5A2101CEA2F68 /* Pods_chatApp.framework */; };
 		919200131FA8CAEA00FE2AB1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 919200121FA8CAEA00FE2AB1 /* AppDelegate.swift */; };
-		919200151FA8CAEA00FE2AB1 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 919200141FA8CAEA00FE2AB1 /* ViewController.swift */; };
+		919200151FA8CAEA00FE2AB1 /* MessagesController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 919200141FA8CAEA00FE2AB1 /* MessagesController.swift */; };
 		919200181FA8CAEA00FE2AB1 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 919200161FA8CAEA00FE2AB1 /* Main.storyboard */; };
 		9192001A1FA8CAEA00FE2AB1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 919200191FA8CAEA00FE2AB1 /* Assets.xcassets */; };
 		9192001D1FA8CAEA00FE2AB1 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9192001B1FA8CAEA00FE2AB1 /* LaunchScreen.storyboard */; };
 		919200261FA8CDB900FE2AB1 /* LoginController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 919200251FA8CDB900FE2AB1 /* LoginController.swift */; };
 		919200281FA8EF9000FE2AB1 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 919200271FA8EF8F00FE2AB1 /* GoogleService-Info.plist */; };
+		9192002A1FADFE8800FE2AB1 /* NewMessageController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 919200291FADFE8800FE2AB1 /* NewMessageController.swift */; };
+		9192002D1FAE02CC00FE2AB1 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9192002C1FAE02CC00FE2AB1 /* User.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		50E0CB4BB42EFF36FE2931B7 /* Pods-chatApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-chatApp.debug.xcconfig"; path = "Pods/Target Support Files/Pods-chatApp/Pods-chatApp.debug.xcconfig"; sourceTree = "<group>"; };
 		9192000F1FA8CAEA00FE2AB1 /* chatApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = chatApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		919200121FA8CAEA00FE2AB1 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		919200141FA8CAEA00FE2AB1 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		919200141FA8CAEA00FE2AB1 /* MessagesController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessagesController.swift; sourceTree = "<group>"; };
 		919200171FA8CAEA00FE2AB1 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		919200191FA8CAEA00FE2AB1 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		9192001C1FA8CAEA00FE2AB1 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		9192001E1FA8CAEA00FE2AB1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		919200251FA8CDB900FE2AB1 /* LoginController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginController.swift; sourceTree = "<group>"; };
 		919200271FA8EF8F00FE2AB1 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		919200291FADFE8800FE2AB1 /* NewMessageController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewMessageController.swift; sourceTree = "<group>"; };
+		9192002C1FAE02CC00FE2AB1 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		A3F59BD36E217F92BC2D9E1E /* Pods-chatApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-chatApp.release.xcconfig"; path = "Pods/Target Support Files/Pods-chatApp/Pods-chatApp.release.xcconfig"; sourceTree = "<group>"; };
 		D6F5B15A18F5A2101CEA2F68 /* Pods_chatApp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_chatApp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -82,6 +86,7 @@
 		919200111FA8CAEA00FE2AB1 /* chatApp */ = {
 			isa = PBXGroup;
 			children = (
+				9192002B1FAE028F00FE2AB1 /* Model */,
 				919200271FA8EF8F00FE2AB1 /* GoogleService-Info.plist */,
 				919200241FA8CD8B00FE2AB1 /* Controller */,
 				919200121FA8CAEA00FE2AB1 /* AppDelegate.swift */,
@@ -97,9 +102,18 @@
 			isa = PBXGroup;
 			children = (
 				919200251FA8CDB900FE2AB1 /* LoginController.swift */,
-				919200141FA8CAEA00FE2AB1 /* ViewController.swift */,
+				919200141FA8CAEA00FE2AB1 /* MessagesController.swift */,
+				919200291FADFE8800FE2AB1 /* NewMessageController.swift */,
 			);
 			path = Controller;
+			sourceTree = "<group>";
+		};
+		9192002B1FAE028F00FE2AB1 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				9192002C1FAE02CC00FE2AB1 /* User.swift */,
+			);
+			path = Model;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -238,8 +252,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				919200151FA8CAEA00FE2AB1 /* ViewController.swift in Sources */,
+				9192002A1FADFE8800FE2AB1 /* NewMessageController.swift in Sources */,
+				919200151FA8CAEA00FE2AB1 /* MessagesController.swift in Sources */,
 				919200261FA8CDB900FE2AB1 /* LoginController.swift in Sources */,
+				9192002D1FAE02CC00FE2AB1 /* User.swift in Sources */,
 				919200131FA8CAEA00FE2AB1 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
