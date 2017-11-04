@@ -17,6 +17,7 @@
 		919200281FA8EF9000FE2AB1 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 919200271FA8EF8F00FE2AB1 /* GoogleService-Info.plist */; };
 		9192002A1FADFE8800FE2AB1 /* NewMessageController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 919200291FADFE8800FE2AB1 /* NewMessageController.swift */; };
 		9192002D1FAE02CC00FE2AB1 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9192002C1FAE02CC00FE2AB1 /* User.swift */; };
+		9192002F1FAE290200FE2AB1 /* LoginController+handlers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9192002E1FAE290200FE2AB1 /* LoginController+handlers.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -32,6 +33,7 @@
 		919200271FA8EF8F00FE2AB1 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		919200291FADFE8800FE2AB1 /* NewMessageController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewMessageController.swift; sourceTree = "<group>"; };
 		9192002C1FAE02CC00FE2AB1 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		9192002E1FAE290200FE2AB1 /* LoginController+handlers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LoginController+handlers.swift"; sourceTree = "<group>"; };
 		A3F59BD36E217F92BC2D9E1E /* Pods-chatApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-chatApp.release.xcconfig"; path = "Pods/Target Support Files/Pods-chatApp/Pods-chatApp.release.xcconfig"; sourceTree = "<group>"; };
 		D6F5B15A18F5A2101CEA2F68 /* Pods_chatApp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_chatApp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -104,6 +106,7 @@
 				919200251FA8CDB900FE2AB1 /* LoginController.swift */,
 				919200141FA8CAEA00FE2AB1 /* MessagesController.swift */,
 				919200291FADFE8800FE2AB1 /* NewMessageController.swift */,
+				9192002E1FAE290200FE2AB1 /* LoginController+handlers.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -254,6 +257,7 @@
 			files = (
 				9192002A1FADFE8800FE2AB1 /* NewMessageController.swift in Sources */,
 				919200151FA8CAEA00FE2AB1 /* MessagesController.swift in Sources */,
+				9192002F1FAE290200FE2AB1 /* LoginController+handlers.swift in Sources */,
 				919200261FA8CDB900FE2AB1 /* LoginController.swift in Sources */,
 				9192002D1FAE02CC00FE2AB1 /* User.swift in Sources */,
 				919200131FA8CAEA00FE2AB1 /* AppDelegate.swift in Sources */,
