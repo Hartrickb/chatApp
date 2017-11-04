@@ -62,41 +62,6 @@ class LoginController: UIViewController {
         
     }
     
-    @objc func handleRegister() {
-        
-        guard let email = emailTextField.text, let password = passwordTextField.text, let name = nameTextField.text else {
-            print("Form is not valid")
-            return
-        }
-        
-        Auth.auth().createUser(withEmail: email, password: password) { (user, error) in
-            
-            if error != nil {
-                print(error!)
-                return
-            }
-            
-            guard let uid = user?.uid else {
-                return
-            }
-            
-            // successfully authenticated user
-            let ref = Database.database().reference()
-            let usersReference = ref.child("users").child(uid)
-            let values = ["name": name, "email": email]
-            usersReference.updateChildValues(values, withCompletionBlock: { (err, ref) in
-                
-                if err != nil {
-                    print(err!)
-                    return
-                }
-                
-                self.dismiss(animated: true, completion: nil)
-                
-            })
-        }
-    }
-    
     let nameTextField: UITextField = {
         let tf = UITextField()
         tf.placeholder = "Name"
