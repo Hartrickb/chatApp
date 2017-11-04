@@ -29,6 +29,16 @@ class NewMessageController: UITableViewController {
             
             if let dictionary = snapshot.value as? [String: AnyObject] {
                 print(dictionary)
+                let user = User()
+                user.name = dictionary["name"] as? String
+                user.email = dictionary["email"] as? String
+                self.users.append(user)
+                
+                DispatchQueue.main.async {
+                    self.tableView.reloadData()
+                }
+                
+//                print(user.name, user.email)
             }
             
         }, withCancel: nil)
@@ -39,14 +49,15 @@ class NewMessageController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 5
+        return users.count
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         // lets use a hack for now, we actually need to dequeue our cells for memory efficiency
         let cell = UITableViewCell(style: .subtitle, reuseIdentifier: cellId)
         
-        cell.textLabel?.text = "Dummy TEXT LALALLA"
+        let user = users[indexPath.row]
+        cell.textLabel?.text = user.name
         
         return cell
     }
