@@ -20,6 +20,8 @@ class NewMessageController: UITableViewController {
         
         navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(handleCancel))
         
+        tableView.register(UserCell.self, forCellReuseIdentifier: cellId)
+        
         fetchUser()
         
     }
@@ -54,17 +56,30 @@ class NewMessageController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         // lets use a hack for now, we actually need to dequeue our cells for memory efficiency
-        let cell = UITableViewCell(style: .subtitle, reuseIdentifier: cellId)
+//        let cell = UITableViewCell(style: .subtitle, reuseIdentifier: cellId)
+        
+        let cell = tableView.dequeueReusableCell(withIdentifier: cellId, for: indexPath)
         
         let user = users[indexPath.row]
         cell.textLabel?.text = user.name
+        cell.detailTextLabel?.text = user.email
         
         return cell
     }
     
 }
 
-
+class UserCell: UITableViewCell {
+    
+    override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
+        super.init(style: .subtitle, reuseIdentifier: reuseIdentifier)
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+}
 
 
 
