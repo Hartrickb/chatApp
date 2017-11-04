@@ -28,10 +28,39 @@ class LoginController: UIViewController {
         button.setTitleColor(UIColor.white, for: .normal)
         button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 16)
         
-        button.addTarget(self, action: #selector(handleRegister), for: .touchUpInside)
+        button.addTarget(self, action: #selector(handleLoginRegister), for: .touchUpInside)
         
         return button
     }()
+    
+    @objc func handleLoginRegister() {
+        if loginRegisterSegmentedControl.selectedSegmentIndex == 0 {
+            handleLogin()
+        } else {
+            handleRegister()
+        }
+    }
+    
+    func handleLogin() {
+        
+        guard let email = emailTextField.text, let password = passwordTextField.text else {
+            print("Form is not valid")
+            return
+        }
+        
+        Auth.auth().signIn(withEmail: email, password: password) { (user, error) in
+            
+            if error != nil {
+                print(error)
+                return
+            }
+            
+            // successfully logged in our user
+            self.dismiss(animated: true, completion: nil)
+            
+        }
+        
+    }
     
     @objc func handleRegister() {
         
@@ -62,11 +91,10 @@ class LoginController: UIViewController {
                     return
                 }
                 
-                print("Saved user successfully into Firebase DB")
+                self.dismiss(animated: true, completion: nil)
                 
             })
         }
-        print(123)
     }
     
     let nameTextField: UITextField = {
