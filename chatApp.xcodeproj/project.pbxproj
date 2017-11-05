@@ -18,6 +18,7 @@
 		9192002A1FADFE8800FE2AB1 /* NewMessageController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 919200291FADFE8800FE2AB1 /* NewMessageController.swift */; };
 		9192002D1FAE02CC00FE2AB1 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9192002C1FAE02CC00FE2AB1 /* User.swift */; };
 		9192002F1FAE290200FE2AB1 /* LoginController+handlers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9192002E1FAE290200FE2AB1 /* LoginController+handlers.swift */; };
+		919200321FAEC4E500FE2AB1 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 919200311FAEC4E500FE2AB1 /* Extensions.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -34,6 +35,7 @@
 		919200291FADFE8800FE2AB1 /* NewMessageController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewMessageController.swift; sourceTree = "<group>"; };
 		9192002C1FAE02CC00FE2AB1 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		9192002E1FAE290200FE2AB1 /* LoginController+handlers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LoginController+handlers.swift"; sourceTree = "<group>"; };
+		919200311FAEC4E500FE2AB1 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		A3F59BD36E217F92BC2D9E1E /* Pods-chatApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-chatApp.release.xcconfig"; path = "Pods/Target Support Files/Pods-chatApp/Pods-chatApp.release.xcconfig"; sourceTree = "<group>"; };
 		D6F5B15A18F5A2101CEA2F68 /* Pods_chatApp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_chatApp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -88,6 +90,7 @@
 		919200111FA8CAEA00FE2AB1 /* chatApp */ = {
 			isa = PBXGroup;
 			children = (
+				919200301FAEC4BA00FE2AB1 /* Helpers */,
 				9192002B1FAE028F00FE2AB1 /* Model */,
 				919200271FA8EF8F00FE2AB1 /* GoogleService-Info.plist */,
 				919200241FA8CD8B00FE2AB1 /* Controller */,
@@ -117,6 +120,14 @@
 				9192002C1FAE02CC00FE2AB1 /* User.swift */,
 			);
 			path = Model;
+			sourceTree = "<group>";
+		};
+		919200301FAEC4BA00FE2AB1 /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				919200311FAEC4E500FE2AB1 /* Extensions.swift */,
+			);
+			path = Helpers;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -263,6 +274,7 @@
 				919200261FA8CDB900FE2AB1 /* LoginController.swift in Sources */,
 				9192002D1FAE02CC00FE2AB1 /* User.swift in Sources */,
 				919200131FA8CAEA00FE2AB1 /* AppDelegate.swift in Sources */,
+				919200321FAEC4E500FE2AB1 /* Extensions.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

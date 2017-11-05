@@ -64,28 +64,30 @@ class NewMessageController: UITableViewController {
         
         print(user.name, user.profileImageUrl)
         if let profileImageUrl = user.profileImageUrl {
-            let url = URL(string: profileImageUrl)
-            print("profileImageUrl: \(profileImageUrl)")
-            URLSession.shared.dataTask(with: url!, completionHandler: { (data, response, error) in
-                
-                // download hit an error so lets return out
-                if error != nil {
-                    print(error)
-                    return
-                }
-                
-                DispatchQueue.main.async {
-                    cell.profileImageView.image = UIImage(data: data!)
-                }
-                
-            }).resume()
+            
+            cell.profileImageView.loadImageUsingCacheWithUrlString(urlString: profileImageUrl)
+//            let url = URL(string: profileImageUrl)
+//            print("profileImageUrl: \(profileImageUrl)")
+//            URLSession.shared.dataTask(with: url!, completionHandler: { (data, response, error) in
+//
+//                // download hit an error so lets return out
+//                if error != nil {
+//                    print(error)
+//                    return
+//                }
+//
+//                DispatchQueue.main.async {
+//                    cell.profileImageView.image = UIImage(data: data!)
+//                }
+//
+//            }).resume()
         }
         
         return cell
     }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 56
+        return 100
     }
     
 }
@@ -95,14 +97,13 @@ class UserCell: UITableViewCell {
     override func layoutSubviews() {
         super.layoutSubviews()
         
-        textLabel?.frame = CGRect(x: 56, y: textLabel!.frame.origin.y, width: textLabel!.frame.width, height: textLabel!.frame.height)
+        textLabel?.frame = CGRect(x: 56, y: textLabel!.frame.origin.y - 2, width: textLabel!.frame.width, height: textLabel!.frame.height)
         
-        detailTextLabel?.frame = CGRect(x: 56, y: detailTextLabel!.frame.origin.y, width: detailTextLabel!.frame.width, height: detailTextLabel!.frame.height)
+        detailTextLabel?.frame = CGRect(x: 56, y: detailTextLabel!.frame.origin.y + 2, width: detailTextLabel!.frame.width, height: detailTextLabel!.frame.height)
     }
     
     let profileImageView: UIImageView = {
         let imageView = UIImageView()
-        imageView.image = #imageLiteral(resourceName: "chatAppImage")
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.layer.cornerRadius = 20
         imageView.layer.masksToBounds = true
