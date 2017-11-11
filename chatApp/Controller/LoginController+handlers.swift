@@ -44,14 +44,14 @@ extension LoginController: UIImagePickerControllerDelegate, UINavigationControll
                     
                     if let profileImageURL = metadata?.downloadURL()?.absoluteString {
                         let values = ["name": name, "email": email, "profileImageUrl": profileImageURL]
-                        self.registerUserInotDatabaseWithUID(uid: uid, values: values)
+                        self.registerUserIntoDatabaseWithUID(uid: uid, values: values)
                     }
                 })
             }
         }
     }
     
-    private func registerUserInotDatabaseWithUID(uid: String, values: [String: Any]) {
+    private func registerUserIntoDatabaseWithUID(uid: String, values: [String: Any]) {
         let ref = Database.database().reference()
         let usersReference = ref.child("users").child(uid)
         usersReference.updateChildValues(values, withCompletionBlock: { (err, ref) in
