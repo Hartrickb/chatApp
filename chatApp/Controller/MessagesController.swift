@@ -20,10 +20,29 @@ class MessagesController: UITableViewController {
         
         checkIfUserIsLoggedIn()
         
+        observeMessages()
+        
+    }
+    
+    func observeMessages() {
+        let ref = Database.database().reference().child("messages")
+        ref.observe(.childAdded, with: { (snapshot) in
+            
+            if let dictionary = snapshot.value as? [String: AnyObject] {
+                let message = Message()
+                message.fromID = dictionary["fromID"] as? String
+                message.text = dictionary["text"] as? String
+                message.timestamp = dictionary["timestamp"] as? NSNumber
+                message.toID = dictionary["toID"] as? String
+                print(message.text)
+            }
+            
+        }, withCancel: nil)
     }
     
     @objc func handleNewMessage() {
         let newMessageController = NewMessageController()
+        newMessageController.messagesController = self
         let navController = UINavigationController(rootViewController: newMessageController)
         present(navController, animated: true, completion: nil)
         
@@ -102,13 +121,14 @@ class MessagesController: UITableViewController {
         containerView.centerXAnchor.constraint(equalTo: titleView.centerXAnchor).isActive = true
         containerView.centerYAnchor.constraint(equalTo: titleView.centerYAnchor).isActive = true
         
-        titleView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(showChatController)))
+//        titleView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(showChatController)))
         
         self.navigationItem.titleView = titleView
     }
     
-    @objc func showChatController() {
+    @objc func showChatControllerForUser(user: User) {
         let chatLogController = ChatLogController(collectionViewLayout: UICollectionViewFlowLayout())
+        chatLogController.user = user
         navigationController?.pushViewController(chatLogController, animated: true)
     }
     
