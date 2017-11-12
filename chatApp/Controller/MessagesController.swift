@@ -29,6 +29,7 @@ class MessagesController: UITableViewController {
     }
     
     var messages = [Message]()
+    var messagesDictionary = [String: Message]()
     
     func observeMessages() {
         let ref = Database.database().reference().child("messages")
@@ -40,7 +41,13 @@ class MessagesController: UITableViewController {
                 message.text = dictionary["text"] as? String
                 message.timestamp = dictionary["timestamp"] as? NSNumber
                 message.toID = dictionary["toID"] as? String
-                self.messages.append(message)
+//                self.messages.append(message)
+                
+                if let toID = message.toID {
+                    self.messagesDictionary[toID] = message
+                    
+                    self.messages = Array(self.messagesDictionary.values)
+                }
                 
                 // this will crash because of background thread, so lets call this on main thread
                 
