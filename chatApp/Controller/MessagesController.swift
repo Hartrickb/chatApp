@@ -10,7 +10,9 @@ import UIKit
 import Firebase
 
 class MessagesController: UITableViewController {
-
+    
+    let cellID = "cellID"
+    
     override func viewDidLoad() {
         super.viewDidLoad()
                 
@@ -19,6 +21,8 @@ class MessagesController: UITableViewController {
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .compose, target: self, action: #selector(handleNewMessage))
         
         checkIfUserIsLoggedIn()
+        
+        tableView.register(UserCell.self, forCellReuseIdentifier: cellID)
         
         observeMessages()
         
@@ -54,26 +58,20 @@ class MessagesController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        let cell = UITableViewCell(style: .subtitle, reuseIdentifier: "cellId")
+//        let cell = UITableViewCell(style: .subtitle, reuseIdentifier: "cellId")
+        
+        let cell = tableView.dequeueReusableCell(withIdentifier: cellID, for: indexPath) as! UserCell
         
         let message = messages[indexPath.row]
-        
-        if let toID = message.toID {
-            let ref = Database.database().reference().child("users").child(toID)
-            ref.observeSingleEvent(of: .value, with: { (snapshot) in
-                
-                if let dictionary = snapshot.value as? [String: AnyObject] {
-                    cell.detailTextLabel?.text = dictionary["name"] as? String
-                }
-                
-                print(snapshot)
-                
-            }, withCancel: nil)
-        }
+        cell.message = message
         
         cell.textLabel?.text = message.text
         
         return cell
+    }
+    
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 72
     }
     
     @objc func handleNewMessage() {
