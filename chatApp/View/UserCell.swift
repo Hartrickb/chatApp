@@ -28,6 +28,14 @@ class UserCell: UITableViewCell {
                 }, withCancel: nil)
             }
             textLabel?.text = message?.text
+            
+            if let seconds = message?.timestamp?.doubleValue {
+                let timestampDate = Date(timeIntervalSinceReferenceDate: seconds)
+                
+                let dateFormatter = DateFormatter()
+                dateFormatter.dateFormat = "hh:mm:ss a"
+                timeLabel.text = dateFormatter.string(from: timestampDate)
+            }
         }
     }
     
@@ -51,8 +59,8 @@ class UserCell: UITableViewCell {
     let timeLabel: UILabel = {
         let label = UILabel()
         label.text = "HH:MM:SS"
-        label.font = UIFont.systemFont(ofSize: 12)
-        label.textColor = UIColor.lightGray
+        label.font = UIFont.systemFont(ofSize: 13)
+        label.textColor = UIColor.darkGray
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
