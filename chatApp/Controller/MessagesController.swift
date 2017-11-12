@@ -26,8 +26,6 @@ class MessagesController: UITableViewController {
         
 //        observeMessages()
         
-        observeUserMessages()
-        
     }
     
     func observeUserMessages() {
@@ -131,6 +129,22 @@ class MessagesController: UITableViewController {
         return 72
     }
     
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        let message = messages[indexPath.row]
+        
+        guard let chatPartnerID = message.chatPartnerID() else {
+            return
+        }
+        
+        let ref = Database.database().reference().child("users").child(chatPartnerID)
+        ref.observeSingleEvent(of: .value, with: { (snapshot) in
+            print(snapshot)
+        }, withCancel: nil)
+        
+//        showChatControllerForUser(user: <#T##User#>)
+    }
+    
     @objc func handleNewMessage() {
         let newMessageController = NewMessageController()
         newMessageController.messagesController = self
@@ -172,6 +186,12 @@ class MessagesController: UITableViewController {
     }
     
     func setupNavBarWithUser(user: User) {
+        
+        messages.removeAll()
+        messagesDictionary.removeAll()
+        tableView.reloadData()
+        
+        observeUserMessages()
         
         let titleView = UIButton()
         titleView.frame = CGRect(x: 0, y: 0, width: 100, height: 40)
