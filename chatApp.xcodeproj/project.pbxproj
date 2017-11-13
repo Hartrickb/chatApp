@@ -22,6 +22,7 @@
 		919200341FB7487000FE2AB1 /* ChatLogController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 919200331FB7487000FE2AB1 /* ChatLogController.swift */; };
 		919200361FB777ED00FE2AB1 /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = 919200351FB777ED00FE2AB1 /* Message.swift */; };
 		919200391FB8099200FE2AB1 /* UserCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 919200381FB8099200FE2AB1 /* UserCell.swift */; };
+		91AEC9451FB9477F0038487D /* ChatMessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91AEC9441FB9477F0038487D /* ChatMessageCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -42,6 +43,7 @@
 		919200331FB7487000FE2AB1 /* ChatLogController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatLogController.swift; sourceTree = "<group>"; };
 		919200351FB777ED00FE2AB1 /* Message.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
 		919200381FB8099200FE2AB1 /* UserCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserCell.swift; sourceTree = "<group>"; };
+		91AEC9441FB9477F0038487D /* ChatMessageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatMessageCell.swift; sourceTree = "<group>"; };
 		A3F59BD36E217F92BC2D9E1E /* Pods-chatApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-chatApp.release.xcconfig"; path = "Pods/Target Support Files/Pods-chatApp/Pods-chatApp.release.xcconfig"; sourceTree = "<group>"; };
 		D6F5B15A18F5A2101CEA2F68 /* Pods_chatApp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_chatApp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -143,6 +145,7 @@
 			isa = PBXGroup;
 			children = (
 				919200381FB8099200FE2AB1 /* UserCell.swift */,
+				91AEC9441FB9477F0038487D /* ChatMessageCell.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -292,6 +295,7 @@
 				9192002F1FAE290200FE2AB1 /* LoginController+handlers.swift in Sources */,
 				919200261FA8CDB900FE2AB1 /* LoginController.swift in Sources */,
 				9192002D1FAE02CC00FE2AB1 /* User.swift in Sources */,
+				91AEC9451FB9477F0038487D /* ChatMessageCell.swift in Sources */,
 				919200131FA8CAEA00FE2AB1 /* AppDelegate.swift in Sources */,
 				919200391FB8099200FE2AB1 /* UserCell.swift in Sources */,
 				919200321FAEC4E500FE2AB1 /* Extensions.swift in Sources */,
