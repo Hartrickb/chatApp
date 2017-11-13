@@ -14,7 +14,43 @@ class ChatLogController: UICollectionViewController, UITextFieldDelegate, UIColl
     var user: User? {
         didSet {
             navigationItem.title = user?.name
+            
+            observeMessages()
         }
+    }
+    
+    var messages = [Message]()
+    
+    func observeMessages() {
+        guard let uid = Auth.auth().currentUser?.uid else {
+            return
+        }
+        
+        let userMessagesRef = Database.database().reference().child("user-messages").child(uid)
+        userMessagesRef.observe(.childAdded, with: { (snapshot) in
+            
+            let messageID = snapshot.key
+            let messagesRef = Database.database().reference().child("messages").child(messageID)
+            messagesRef.observeSingleEvent(of: .value, with: { (snapshot) in
+                
+                guard let dictionary = snapshot.value as? [String: AnyObject] else {
+                    return
+                }
+                
+                let message = Message()
+                message.fromID = dictionary["fromID"] as? String
+                message.text = dictionary["text"] as? String
+                message.timestamp = dictionary["timestamp"] as? NSNumber
+                message.toID = dictionary["toID"] as? String
+                self.messages.append(message)
+                
+                DispatchQueue.main.async {
+                    self.collectionView?.reloadData()
+                }
+                
+            }, withCancel: nil)
+            
+        }, withCancel: nil)
     }
     
     lazy var inputTextField: UITextField = {
@@ -37,7 +73,7 @@ class ChatLogController: UICollectionViewController, UITextFieldDelegate, UIColl
     }
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 5
+        return messages.count
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -54,6 +90,7 @@ class ChatLogController: UICollectionViewController, UITextFieldDelegate, UIColl
     
     func setupInputComponents() {
         let containerView = UIView()
+        containerView.backgroundColor = UIColor.white
         containerView.translatesAutoresizingMaskIntoConstraints = false
         
         view.addSubview(containerView)
