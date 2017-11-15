@@ -50,8 +50,8 @@ class MessagesController: UITableViewController {
                     message.toID = dictionary["toID"] as? String
                     //                self.messages.append(message)
                     
-                    if let toID = message.toID {
-                        self.messagesDictionary[toID] = message
+                    if let chatPartnerID = message.chatPartnerID() {
+                        self.messagesDictionary[chatPartnerID] = message
                         
                         self.messages = Array(self.messagesDictionary.values)
                         self.messages.sort(by: { (message1, message2) -> Bool in
