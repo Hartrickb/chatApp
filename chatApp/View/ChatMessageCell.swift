@@ -41,9 +41,12 @@ class ChatMessageCell: UICollectionViewCell {
         bubbleView.heightAnchor.constraint(equalTo: self.heightAnchor).isActive = true
         
         // x, y, width, height
-        textView.rightAnchor.constraint(equalTo: self.rightAnchor).isActive = true
+//        textView.rightAnchor.constraint(equalTo: self.rightAnchor).isActive = true
+        textView.leftAnchor.constraint(equalTo: bubbleView.leftAnchor, constant: 8).isActive = true
         textView.topAnchor.constraint(equalTo: self.topAnchor).isActive = true
-        textView.widthAnchor.constraint(equalToConstant: 200).isActive = true
+        
+        textView.rightAnchor.constraint(equalTo: bubbleView.rightAnchor).isActive = true
+//        textView.widthAnchor.constraint(equalToConstant: 200).isActive = true
         textView.heightAnchor.constraint(equalTo: self.heightAnchor).isActive = true
     }
     
