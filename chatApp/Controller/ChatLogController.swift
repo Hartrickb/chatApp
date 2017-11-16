@@ -106,6 +106,9 @@ class ChatLogController: UICollectionViewController, UITextFieldDelegate, UIColl
             // incoming gray
             cell.bubbleView.backgroundColor = UIColor(r: 240, g: 240, b: 240)
             cell.textView.textColor = UIColor.black
+            
+            cell.bubbleViewRightAnchor?.isActive = false
+            cell.bubbleViewLeftAnchor?.isActive = true
         }
     }
     
