@@ -60,16 +60,24 @@ class MessagesController: UITableViewController {
                         })
                     }
                     
-                    // this will crash because of background thread, so lets call this on main thread
-                    
-                    DispatchQueue.main.async {
-                        self.tableView.reloadData()
-                    }
+                    self.timer?.invalidate()
+                    self.timer = Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(self.handleReloadTable), userInfo: nil, repeats: false)
                 }
                 
             }, withCancel: nil)
             
         }, withCancel: nil)
+    }
+    
+    var timer: Timer?
+    
+    @objc func handleReloadTable() {
+        // this will crash because of background thread, so lets call this on main thread
+        
+        DispatchQueue.main.async {
+            print("We reloaded the table")
+            self.tableView.reloadData()
+        }
     }
     
     var messages = [Message]()
