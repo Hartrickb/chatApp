@@ -70,6 +70,7 @@ class ChatLogController: UICollectionViewController, UITextFieldDelegate, UIColl
         super.viewDidLoad()
         
         collectionView?.contentInset = UIEdgeInsets(top: 8, left: 0, bottom: 58, right: 0)
+        collectionView?.scrollIndicatorInsets = UIEdgeInsets(top: 0, left: 0, bottom: 50, right: 0)
         collectionView?.alwaysBounceVertical = true
         collectionView?.backgroundColor = UIColor.white
         collectionView?.register(ChatMessageCell.self, forCellWithReuseIdentifier: cellID)
@@ -88,10 +89,28 @@ class ChatLogController: UICollectionViewController, UITextFieldDelegate, UIColl
         let message = messages[indexPath.item]
         cell.textView.text = message.text
         
+        setupCell(cell: cell, message: message)
+        
         // modify the bubbleView's width
         cell.bubbleWidthAnchor?.constant = estimatedFrameForText(text: message.text!).width + 32
         
         return cell
+    }
+    
+    private func setupCell(cell: ChatMessageCell, message: Message) {
+        if message.fromID == Auth.auth().currentUser?.uid {
+            // outgoing blue
+            cell.bubbleView.backgroundColor = ChatMessageCell.blueColor
+            cell.textView.textColor = UIColor.white
+        } else {
+            // incoming gray
+            cell.bubbleView.backgroundColor = UIColor(r: 240, g: 240, b: 240)
+            cell.textView.textColor = UIColor.black
+        }
+    }
+    
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        collectionView?.collectionViewLayout.invalidateLayout()
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
