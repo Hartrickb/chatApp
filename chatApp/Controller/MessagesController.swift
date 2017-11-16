@@ -83,38 +83,6 @@ class MessagesController: UITableViewController {
     var messages = [Message]()
     var messagesDictionary = [String: Message]()
     
-    func observeMessages() {
-        let ref = Database.database().reference().child("messages")
-        ref.observe(.childAdded, with: { (snapshot) in
-            
-            if let dictionary = snapshot.value as? [String: AnyObject] {
-                let message = Message()
-                message.fromID = dictionary["fromID"] as? String
-                message.text = dictionary["text"] as? String
-                message.timestamp = dictionary["timestamp"] as? NSNumber
-                message.toID = dictionary["toID"] as? String
-//                self.messages.append(message)
-                
-                if let toID = message.toID {
-                    self.messagesDictionary[toID] = message
-                    
-                    self.messages = Array(self.messagesDictionary.values)
-                    self.messages.sort(by: { (message1, message2) -> Bool in
-                        
-                        return message1.timestamp!.intValue > message2.timestamp!.intValue
-                    })
-                }
-                
-                // this will crash because of background thread, so lets call this on main thread
-                
-                DispatchQueue.main.async {
-                    self.tableView.reloadData()
-                }
-            }
-            
-        }, withCancel: nil)
-    }
-    
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return messages.count
     }
