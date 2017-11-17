@@ -37,34 +37,43 @@ class MessagesController: UITableViewController {
         let ref = Database.database().reference().child("user-messages").child(uid)
         ref.observe(.childAdded, with: { (snapshot) in
             
-            let messageID = snapshot.key
-            let messagesReference = Database.database().reference().child("messages").child(messageID)
+            let userID = snapshot.key
             
-            messagesReference.observeSingleEvent(of: .value, with: { (snapshot) in
+            Database.database().reference().child("user-messages").child(uid).child(userID).observe(.childAdded, with: { (snapshot) in
                 
-                if let dictionary = snapshot.value as? [String: AnyObject] {
-                    let message = Message()
-                    message.fromID = dictionary["fromID"] as? String
-                    message.text = dictionary["text"] as? String
-                    message.timestamp = dictionary["timestamp"] as? NSNumber
-                    message.toID = dictionary["toID"] as? String
-                    //                self.messages.append(message)
+                let messageID = snapshot.key
+                let messagesReference = Database.database().reference().child("messages").child(messageID)
+                
+                messagesReference.observeSingleEvent(of: .value, with: { (snapshot) in
                     
-                    if let chatPartnerID = message.chatPartnerID() {
-                        self.messagesDictionary[chatPartnerID] = message
+                    if let dictionary = snapshot.value as? [String: AnyObject] {
+                        let message = Message()
+                        message.fromID = dictionary["fromID"] as? String
+                        message.text = dictionary["text"] as? String
+                        message.timestamp = dictionary["timestamp"] as? NSNumber
+                        message.toID = dictionary["toID"] as? String
+                        //                self.messages.append(message)
                         
-                        self.messages = Array(self.messagesDictionary.values)
-                        self.messages.sort(by: { (message1, message2) -> Bool in
+                        if let chatPartnerID = message.chatPartnerID() {
+                            self.messagesDictionary[chatPartnerID] = message
                             
-                            return message1.timestamp!.intValue > message2.timestamp!.intValue
-                        })
+                            self.messages = Array(self.messagesDictionary.values)
+                            self.messages.sort(by: { (message1, message2) -> Bool in
+                                
+                                return message1.timestamp!.intValue > message2.timestamp!.intValue
+                            })
+                        }
+                        
+                        self.timer?.invalidate()
+                        self.timer = Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(self.handleReloadTable), userInfo: nil, repeats: false)
                     }
                     
-                    self.timer?.invalidate()
-                    self.timer = Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(self.handleReloadTable), userInfo: nil, repeats: false)
-                }
+                }, withCancel: nil)
                 
             }, withCancel: nil)
+            
+            return
+            
             
         }, withCancel: nil)
     }

@@ -43,7 +43,6 @@ class ChatLogController: UICollectionViewController, UITextFieldDelegate, UIColl
                 message.timestamp = dictionary["timestamp"] as? NSNumber
                 message.toID = dictionary["toID"] as? String
                 
-                print("We fetched a message from Firebase, and we need to decide whether or not to filter it out", message.text)
                 if message.chatPartnerID() == self.user?.id {
                     self.messages.append(message)
                     
