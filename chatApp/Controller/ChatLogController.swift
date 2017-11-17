@@ -22,11 +22,11 @@ class ChatLogController: UICollectionViewController, UITextFieldDelegate, UIColl
     var messages = [Message]()
     
     func observeMessages() {
-        guard let uid = Auth.auth().currentUser?.uid else {
+        guard let uid = Auth.auth().currentUser?.uid, let toID = user?.id else {
             return
         }
         
-        let userMessagesRef = Database.database().reference().child("user-messages").child(uid)
+        let userMessagesRef = Database.database().reference().child("user-messages").child(uid).child(toID)
         userMessagesRef.observe(.childAdded, with: { (snapshot) in
             
             let messageID = snapshot.key
@@ -43,6 +43,7 @@ class ChatLogController: UICollectionViewController, UITextFieldDelegate, UIColl
                 message.timestamp = dictionary["timestamp"] as? NSNumber
                 message.toID = dictionary["toID"] as? String
                 
+                print("We fetched a message from Firebase, and we need to decide whether or not to filter it out", message.text)
                 if message.chatPartnerID() == self.user?.id {
                     self.messages.append(message)
                     
@@ -304,12 +305,12 @@ class ChatLogController: UICollectionViewController, UITextFieldDelegate, UIColl
             
             self.inputTextField.text = nil
             
-            let userMessagesRef = Database.database().reference().child("user-messages").child(fromID)
+            let userMessagesRef = Database.database().reference().child("user-messages").child(fromID).child(toID)
             
             let messageID = childRef.key
             userMessagesRef.updateChildValues([messageID: 1])
             
-            let recipientUserMessagesRef = Database.database().reference().child("user-messages").child(toID)
+            let recipientUserMessagesRef = Database.database().reference().child("user-messages").child(toID).child(fromID)
             recipientUserMessagesRef.updateChildValues([messageID: 1])
             
         }
