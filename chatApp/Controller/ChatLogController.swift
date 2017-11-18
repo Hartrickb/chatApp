@@ -406,7 +406,13 @@ class ChatLogController: UICollectionViewController, UITextFieldDelegate, UIColl
     func performZoomInForStartingImageView(startingImageView: UIImageView) {
         
         print("Performing zoom in logic in conroller")
+        let startingFrame = startingImageView.superview?.convert(startingImageView.frame, to: nil)
+        print(startingFrame)
         
+        let zoomingImageView = UIImageView(frame: startingFrame!)
+        zoomingImageView.backgroundColor = UIColor.red
+        
+        UIApplication.shared.keyWindow?.addSubview(zoomingImageView)
     }
     
 }
