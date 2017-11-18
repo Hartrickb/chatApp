@@ -37,14 +37,14 @@ class ChatLogController: UICollectionViewController, UITextFieldDelegate, UIColl
                     return
                 }
                 
-                let message = Message()
-                message.fromID = dictionary["fromID"] as? String
-                message.imageUrl = dictionary["imageUrl"] as? String
-                message.text = dictionary["text"] as? String
-                message.timestamp = dictionary["timestamp"] as? NSNumber
-                message.toID = dictionary["toID"] as? String
+//                let message = Message(dictionary: dictionary)
+//                message.fromID = dictionary["fromID"] as? String
+//                message.imageUrl = dictionary["imageUrl"] as? String
+//                message.text = dictionary["text"] as? String
+//                message.timestamp = dictionary["timestamp"] as? NSNumber
+//                message.toID = dictionary["toID"] as? String
                 
-                self.messages.append(message)
+                self.messages.append(Message(dictionary: dictionary))
                 
                 DispatchQueue.main.async {
                     self.collectionView?.reloadData()
@@ -180,7 +180,7 @@ class ChatLogController: UICollectionViewController, UITextFieldDelegate, UIColl
                 }
                 
                 if let imageUrl = metadata?.downloadURL()?.absoluteString {
-                    self.sendMessageWithImageUrl(imageUrl: imageUrl)
+                    self.sendMessageWithImageUrl(imageUrl: imageUrl, image: image)
                 }
                 
             })
@@ -188,14 +188,14 @@ class ChatLogController: UICollectionViewController, UITextFieldDelegate, UIColl
         
     }
     
-    private func sendMessageWithImageUrl(imageUrl: String) {
+    private func sendMessageWithImageUrl(imageUrl: String, image: UIImage) {
         
         let ref = Database.database().reference().child("messages")
         let childRef = ref.childByAutoId()
         let toID = user!.id!
         let fromID = Auth.auth().currentUser!.uid
         let timestamp = Int(Date.timeIntervalSinceReferenceDate)
-        let values = ["imageUrl": imageUrl, "toID": toID, "fromID": fromID, "timestamp": timestamp] as [String : Any]
+        let values = ["toID": toID, "fromID": fromID, "timestamp": timestamp, "imageUrl": imageUrl, "imageWidth": image.size.width, "imageHeight": image.size.height] as [String : Any]
         
         childRef.updateChildValues(values) { (error, ref) in
             
