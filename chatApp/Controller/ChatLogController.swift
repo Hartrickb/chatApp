@@ -166,7 +166,23 @@ class ChatLogController: UICollectionViewController, UITextFieldDelegate, UIColl
     }
     
     func uploadToFirebaseStorageUsingImage(image: UIImage) {
-        print("Upload to FIREBASE!")
+        
+        let imageName = NSUUID().uuidString
+        let ref = Storage.storage().reference().child("message_images").child(imageName)
+        
+        if let uploadData = UIImageJPEGRepresentation(image, 0.2) {
+            ref.putData(uploadData, metadata: nil, completion: { (metadata, error) in
+                
+                if error != nil {
+                    print("Failed to upload image:", error)
+                    return
+                }
+                
+                print(metadata?.downloadURL()?.absoluteString)
+                
+            })
+        }
+        
     }
     
     override var inputAccessoryView: UIView? {
