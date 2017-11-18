@@ -57,11 +57,12 @@ class ChatMessageCell: UICollectionViewCell {
     
     @objc func handleZoomTap(tapGesture: UITapGestureRecognizer) {
         
-        print("Handling zoom tap")
-        let imageView = tapGesture.view as? UIImageView
-        // PRO Tip: don't perform a lot of custom logic inside of a view class
-        self.chatLogController?.performZoomInForStartingImageView(startingImageView: imageView!)
-        
+        if let imageView = tapGesture.view as? UIImageView {
+            
+            // PRO Tip: don't perform a lot of custom logic inside of a view class
+            self.chatLogController?.performZoomInForStartingImageView(startingImageView: imageView)
+
+        }
     }
     
     var bubbleWidthAnchor: NSLayoutConstraint?
