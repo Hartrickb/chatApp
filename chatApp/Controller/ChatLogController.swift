@@ -39,6 +39,7 @@ class ChatLogController: UICollectionViewController, UITextFieldDelegate, UIColl
                 
                 let message = Message()
                 message.fromID = dictionary["fromID"] as? String
+                message.imageUrl = dictionary["imageUrl"] as? String
                 message.text = dictionary["text"] as? String
                 message.timestamp = dictionary["timestamp"] as? NSNumber
                 message.toID = dictionary["toID"] as? String
@@ -286,6 +287,13 @@ class ChatLogController: UICollectionViewController, UITextFieldDelegate, UIColl
     private func setupCell(cell: ChatMessageCell, message: Message) {
         if let profileImageUrl = self.user?.profileImageUrl {
             cell.profileImageView.loadImageUsingCacheWithUrlString(urlString: profileImageUrl)
+        }
+        
+        if let messageImageUrl = message.imageUrl {
+            cell.messageImageView.loadImageUsingCacheWithUrlString(urlString: messageImageUrl)
+            cell.messageImageView.isHidden = false
+        } else {
+            cell.messageImageView.isHidden = true
         }
         
         if message.fromID == Auth.auth().currentUser?.uid {

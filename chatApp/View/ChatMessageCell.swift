@@ -46,7 +46,6 @@ class ChatMessageCell: UICollectionViewCell {
         imageView.layer.cornerRadius = 16
         imageView.layer.masksToBounds = true
         imageView.contentMode = .scaleAspectFill
-        imageView.backgroundColor = UIColor.brown
         return imageView
     }()
     
