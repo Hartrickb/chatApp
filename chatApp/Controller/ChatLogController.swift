@@ -178,9 +178,41 @@ class ChatLogController: UICollectionViewController, UITextFieldDelegate, UIColl
                     return
                 }
                 
-                print(metadata?.downloadURL()?.absoluteString)
+                if let imageUrl = metadata?.downloadURL()?.absoluteString {
+                    self.sendMessageWithImageUrl(imageUrl: imageUrl)
+                }
                 
             })
+        }
+        
+    }
+    
+    private func sendMessageWithImageUrl(imageUrl: String) {
+        
+        let ref = Database.database().reference().child("messages")
+        let childRef = ref.childByAutoId()
+        let toID = user!.id!
+        let fromID = Auth.auth().currentUser!.uid
+        let timestamp = Int(Date.timeIntervalSinceReferenceDate)
+        let values = ["imageUrl": imageUrl, "toID": toID, "fromID": fromID, "timestamp": timestamp] as [String : Any]
+        
+        childRef.updateChildValues(values) { (error, ref) in
+            
+            if error != nil {
+                print(error)
+                return
+            }
+            
+            self.inputTextField.text = nil
+            
+            let userMessagesRef = Database.database().reference().child("user-messages").child(fromID).child(toID)
+            
+            let messageID = childRef.key
+            userMessagesRef.updateChildValues([messageID: 1])
+            
+            let recipientUserMessagesRef = Database.database().reference().child("user-messages").child(toID).child(fromID)
+            recipientUserMessagesRef.updateChildValues([messageID: 1])
+            
         }
         
     }
@@ -243,7 +275,10 @@ class ChatLogController: UICollectionViewController, UITextFieldDelegate, UIColl
         setupCell(cell: cell, message: message)
         
         // modify the bubbleView's width
-        cell.bubbleWidthAnchor?.constant = estimatedFrameForText(text: message.text!).width + 32
+        
+        if let text = message.text {
+            cell.bubbleWidthAnchor?.constant = estimatedFrameForText(text: message.text!).width + 32
+        }
         
         return cell
     }
@@ -306,7 +341,6 @@ class ChatLogController: UICollectionViewController, UITextFieldDelegate, UIColl
         let fromID = Auth.auth().currentUser!.uid
         let timestamp = Int(Date.timeIntervalSinceReferenceDate)
         let values = ["text": inputTextField.text!, "toID": toID, "fromID": fromID, "timestamp": timestamp] as [String : Any]
-//        childRef.updateChildValues(values)
         
         childRef.updateChildValues(values) { (error, ref) in
             
