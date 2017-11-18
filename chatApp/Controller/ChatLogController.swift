@@ -256,6 +256,8 @@ class ChatLogController: UICollectionViewController, UITextFieldDelegate, UIColl
         
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellID, for: indexPath) as! ChatMessageCell
         
+        cell.chatLogController = self
+        
         let message = messages[indexPath.item]
         cell.textView.text = message.text
         
@@ -264,10 +266,13 @@ class ChatLogController: UICollectionViewController, UITextFieldDelegate, UIColl
         // modify the bubbleView's width
         
         if let text = message.text {
+            // a text message
             cell.bubbleWidthAnchor?.constant = estimatedFrameForText(text: message.text!).width + 32
+            cell.textView.isHidden = false
         } else if message.imageUrl != nil {
             // fall in here if its an image message
             cell.bubbleWidthAnchor?.constant = 200
+            cell.textView.isHidden = true
         }
         
         return cell
@@ -395,6 +400,13 @@ class ChatLogController: UICollectionViewController, UITextFieldDelegate, UIColl
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         handleSend()
         return true
+    }
+    
+    // my custum zooming logic
+    func performZoomInForStartingImageView(startingImageView: UIImageView) {
+        
+        print("Performing zoom in logic in conroller")
+        
     }
     
 }
