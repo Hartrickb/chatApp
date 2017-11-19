@@ -344,6 +344,8 @@ class ChatLogController: UICollectionViewController, UITextFieldDelegate, UIColl
             cell.textView.isHidden = true
         }
         
+        cell.playButton.isHidden = message.videoUrl == nil
+        
         return cell
     }
     

@@ -12,6 +12,15 @@ class ChatMessageCell: UICollectionViewCell {
     
     var chatLogController: ChatLogController?
     
+    let playButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        let image = #imageLiteral(resourceName: "play")
+        button.tintColor = UIColor.white
+        button.setImage(image, for: .normal)
+        return button
+    }()
+    
     let textView: UITextView = {
         let tv = UITextView()
 //        tv.text = "SAMPLE TEXT FOR NOW"
@@ -84,6 +93,13 @@ class ChatMessageCell: UICollectionViewCell {
         messageImageView.topAnchor.constraint(equalTo: bubbleView.topAnchor).isActive = true
         messageImageView.widthAnchor.constraint(equalTo: bubbleView.widthAnchor).isActive = true
         messageImageView.heightAnchor.constraint(equalTo: bubbleView.heightAnchor).isActive = true
+        
+        bubbleView.addSubview(playButton)
+        // x, y, width, height
+        playButton.centerXAnchor.constraint(equalTo: bubbleView.centerXAnchor).isActive = true
+        playButton.centerYAnchor.constraint(equalTo: bubbleView.centerYAnchor).isActive = true
+        playButton.widthAnchor.constraint(equalToConstant: 50).isActive = true
+        playButton.heightAnchor.constraint(equalToConstant: 50).isActive = true
         
         // x, y, width, height
         profileImageView.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 8).isActive = true
