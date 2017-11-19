@@ -169,8 +169,8 @@ class ChatLogController: UICollectionViewController, UITextFieldDelegate, UIColl
     }
     
     private func handleVideoSelectedFor(url: URL) {
-        let filename = "someFilename.mov"
-        let uploadTask = Storage.storage().reference().child(filename).putFile(from: url, metadata: nil, completion: { (metadata, error) in
+        let filename = UUID().uuidString + ".mov"
+        let uploadTask = Storage.storage().reference().child("message_movies").child(filename).putFile(from: url, metadata: nil, completion: { (metadata, error) in
             
             if error != nil {
                 print("Failed upload of video:", error)
@@ -193,10 +193,12 @@ class ChatLogController: UICollectionViewController, UITextFieldDelegate, UIColl
         })
         
         uploadTask.observe(.progress) { (snapshot) in
-            if let completedUnitCount = snapshot.progress?.completedUnitCount {
+            if let completedUnitCount = snapshot.progress?.completedUnitCount, let totalUnitCount = snapshot.progress?.totalUnitCount {
+                
+                let uploadPercentage = Float64(completedUnitCount) * 100 / Float64(totalUnitCount)
                 
                 // possible bug - use print(completedUnitCount)
-                self.navigationItem.title = String(completedUnitCount)
+                self.navigationItem.title = String(format: "%.0f", uploadPercentage) + " %"
             }
         }
         
