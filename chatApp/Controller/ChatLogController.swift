@@ -170,7 +170,7 @@ class ChatLogController: UICollectionViewController, UITextFieldDelegate, UIColl
     
     private func handleVideoSelectedFor(url: URL) {
         let filename = "someFilename.mov"
-        Storage.storage().reference().child(filename).putFile(from: url, metadata: nil, completion: { (metadata, error) in
+        let uploadTask = Storage.storage().reference().child(filename).putFile(from: url, metadata: nil, completion: { (metadata, error) in
             
             if error != nil {
                 print("Failed upload of video:", error)
@@ -181,6 +181,18 @@ class ChatLogController: UICollectionViewController, UITextFieldDelegate, UIColl
                 print(storageUrl)
             }
         })
+        
+        uploadTask.observe(.progress) { (snapshot) in
+            if let completedUnitCount = snapshot.progress?.completedUnitCount {
+                
+                // possible bug - use print(completedUnitCount)
+                self.navigationItem.title = String(completedUnitCount)
+            }
+        }
+        
+        uploadTask.observe(.success) { (snapshot) in
+            self.navigationItem.title = self.user?.name
+        }
     }
     
     private func handleImageSelectedFor(info: [String: Any]) {
