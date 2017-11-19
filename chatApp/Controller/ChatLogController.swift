@@ -177,8 +177,11 @@ class ChatLogController: UICollectionViewController, UITextFieldDelegate, UIColl
                 return
             }
             
-            if let storageUrl = metadata?.downloadURL()?.absoluteString {
-                print(storageUrl)
+            if let videoUrl = metadata?.downloadURL()?.absoluteString {
+//                let properties = ["imageUrl": imageUrl, "imageWidth": image.size.width, "imageHeight": image.size.height] as [String : AnyObject]
+                
+                let properties = ["videoUrl": videoUrl] as [String: AnyObject]
+                self.sendMessageWithProperties(properties: properties)
             }
         })
         
