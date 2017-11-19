@@ -178,10 +178,17 @@ class ChatLogController: UICollectionViewController, UITextFieldDelegate, UIColl
             }
             
             if let videoUrl = metadata?.downloadURL()?.absoluteString {
-//                let properties = ["imageUrl": imageUrl, "imageWidth": image.size.width, "imageHeight": image.size.height] as [String : AnyObject]
                 
-                let properties = ["videoUrl": videoUrl] as [String: AnyObject]
-                self.sendMessageWithProperties(properties: properties)
+                if let thumbnailImage = self.thumbnailImageFor(fileUrl: url) {
+                    
+                    self.uploadToFirebaseStorageUsingImage(image: thumbnailImage, completion: { (imageUrl) in
+                        
+                        //
+                        let properties = ["imageUrl": imageUrl, "imageWidth": thumbnailImage.size.width, "imageHeight": thumbnailImage.size.height, "videoUrl": videoUrl] as [String : AnyObject]
+                        self.sendMessageWithProperties(properties: properties)
+                        
+                    })
+                }
             }
         })
         
@@ -198,6 +205,20 @@ class ChatLogController: UICollectionViewController, UITextFieldDelegate, UIColl
         }
     }
     
+    private func thumbnailImageFor(fileUrl: URL) -> UIImage? {
+        
+        let asset = AVAsset(url: fileUrl)
+        let imageGenerator = AVAssetImageGenerator(asset: asset)
+        
+        do {
+            let thumbnailCGImage = try imageGenerator.copyCGImage(at: CMTimeMake(1, 60), actualTime: nil)
+            return UIImage(cgImage: thumbnailCGImage)
+        } catch let err {
+            print(err)
+        }
+        return nil
+    }
+    
     private func handleImageSelectedFor(info: [String: Any]) {
         var selectedImageFromPicker: UIImage?
         
@@ -208,11 +229,14 @@ class ChatLogController: UICollectionViewController, UITextFieldDelegate, UIColl
         }
         
         if let selectedImage = selectedImageFromPicker {
-            uploadToFirebaseStorageUsingImage(image: selectedImage)
+            uploadToFirebaseStorageUsingImage(image: selectedImage, completion: { (imageUrl) in
+                self.sendMessageWithImageUrl(imageUrl: imageUrl, image: selectedImage)
+            })
+//            uploadToFirebaseStorageUsingImage(image: selectedImage)
         }
     }
     
-    func uploadToFirebaseStorageUsingImage(image: UIImage) {
+    func uploadToFirebaseStorageUsingImage(image: UIImage, completion: @escaping (_ imageUrl: String) -> ()) {
         
         let imageName = NSUUID().uuidString
         let ref = Storage.storage().reference().child("message_images").child(imageName)
@@ -226,7 +250,7 @@ class ChatLogController: UICollectionViewController, UITextFieldDelegate, UIColl
                 }
                 
                 if let imageUrl = metadata?.downloadURL()?.absoluteString {
-                    self.sendMessageWithImageUrl(imageUrl: imageUrl, image: image)
+                    completion(imageUrl)
                 }
                 
             })
