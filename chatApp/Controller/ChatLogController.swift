@@ -155,24 +155,35 @@ class ChatLogController: UICollectionViewController, UITextFieldDelegate, UIColl
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
         
         if let videoUrl = info[UIImagePickerControllerMediaURL] as? URL {
-            print("Here's the file url:", videoUrl)
+            // we selected a video
+            handleVideoSelectedFor(url: videoUrl)
             
-            let filename = "someFilename.mov"
-            Storage.storage().reference().child(filename).putFile(from: videoUrl, metadata: nil, completion: { (metadata, error) in
-                
-                if error != nil {
-                    print("Failed upload of video:", error)
-                    return
-                }
-                
-                if let storageUrl = metadata?.downloadURL()?.absoluteString {
-                    print(storageUrl)
-                }
-                
-            })
+        } else {
+            // we selected an image
+            handleImageSelectedFor(info: info)
             
         }
         
+        dismiss(animated: true, completion: nil)
+        
+    }
+    
+    private func handleVideoSelectedFor(url: URL) {
+        let filename = "someFilename.mov"
+        Storage.storage().reference().child(filename).putFile(from: url, metadata: nil, completion: { (metadata, error) in
+            
+            if error != nil {
+                print("Failed upload of video:", error)
+                return
+            }
+            
+            if let storageUrl = metadata?.downloadURL()?.absoluteString {
+                print(storageUrl)
+            }
+        })
+    }
+    
+    private func handleImageSelectedFor(info: [String: Any]) {
         var selectedImageFromPicker: UIImage?
         
         if let editedImage = info["UIImagePickerControllerEditedImage"] as? UIImage {
@@ -182,13 +193,8 @@ class ChatLogController: UICollectionViewController, UITextFieldDelegate, UIColl
         }
         
         if let selectedImage = selectedImageFromPicker {
-            
             uploadToFirebaseStorageUsingImage(image: selectedImage)
-            
         }
-        
-        dismiss(animated: true, completion: nil)
-        
     }
     
     func uploadToFirebaseStorageUsingImage(image: UIImage) {
