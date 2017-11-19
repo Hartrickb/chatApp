@@ -8,6 +8,8 @@
 
 import UIKit
 import Firebase
+import MobileCoreServices
+import AVFoundation
 
 class ChatLogController: UICollectionViewController, UITextFieldDelegate, UICollectionViewDelegateFlowLayout, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
@@ -141,6 +143,7 @@ class ChatLogController: UICollectionViewController, UITextFieldDelegate, UIColl
         
         imagePickerController.allowsEditing = true
         imagePickerController.delegate = self
+        imagePickerController.mediaTypes = [kUTTypeImage as String, kUTTypeMovie as String]
         
         present(imagePickerController, animated: true, completion: nil)
     }
@@ -150,6 +153,25 @@ class ChatLogController: UICollectionViewController, UITextFieldDelegate, UIColl
     }
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
+        
+        if let videoUrl = info[UIImagePickerControllerMediaURL] as? URL {
+            print("Here's the file url:", videoUrl)
+            
+            let filename = "someFilename.mov"
+            Storage.storage().reference().child(filename).putFile(from: videoUrl, metadata: nil, completion: { (metadata, error) in
+                
+                if error != nil {
+                    print("Failed upload of video:", error)
+                    return
+                }
+                
+                if let storageUrl = metadata?.downloadURL()?.absoluteString {
+                    print(storageUrl)
+                }
+                
+            })
+            
+        }
         
         var selectedImageFromPicker: UIImage?
         
@@ -429,7 +451,7 @@ class ChatLogController: UICollectionViewController, UITextFieldDelegate, UIColl
             keyWindow.addSubview(blackBackgroundView!)
             keyWindow.addSubview(zoomingImageView)
             
-            UIView.animate(withDuration: 3.5, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
+            UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
                 
                 self.blackBackgroundView?.alpha = 1
                 self.inputContainerView.alpha = 0
