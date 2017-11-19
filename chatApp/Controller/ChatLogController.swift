@@ -404,9 +404,13 @@ class ChatLogController: UICollectionViewController, UITextFieldDelegate, UIColl
     
     var startingFrame: CGRect?
     var blackBackgroundView: UIView?
+    var startingImageView: UIImageView?
     
     // my custum zooming logic
     func performZoomInForStartingImageView(startingImageView: UIImageView) {
+        
+        self.startingImageView = startingImageView
+        self.startingImageView?.isHidden = true
         
         startingFrame = startingImageView.superview?.convert(startingImageView.frame, to: nil)
         
@@ -425,7 +429,7 @@ class ChatLogController: UICollectionViewController, UITextFieldDelegate, UIColl
             keyWindow.addSubview(blackBackgroundView!)
             keyWindow.addSubview(zoomingImageView)
             
-            UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
+            UIView.animate(withDuration: 3.5, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
                 
                 self.blackBackgroundView?.alpha = 1
                 self.inputContainerView.alpha = 0
@@ -460,12 +464,15 @@ class ChatLogController: UICollectionViewController, UITextFieldDelegate, UIColl
             UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
                 
                 zoomOutImageView.frame = self.startingFrame!
+                zoomOutImageView.layer.cornerRadius = 16
+                zoomOutImageView.clipsToBounds = true
                 self.blackBackgroundView?.alpha = 0
                 self.inputContainerView.alpha = 1
                 
             }, completion: { (completed) in
                 
                 zoomOutImageView.removeFromSuperview()
+                self.startingImageView?.isHidden = false
                 
             })
         }
