@@ -28,18 +28,17 @@ class ChatMessageCell: UICollectionViewCell {
     }()
     
     var playerLayer: AVPlayerLayer?
+    var player: AVPlayer?
     
     @objc func handlePlay() {
         if let videoUrlString = message?.videoUrl, let url = URL(string: videoUrlString) {
-            let player = AVPlayer(url: url)
+            player = AVPlayer(url: url)
             
             playerLayer = AVPlayerLayer(player: player)
             playerLayer?.frame = bubbleView.bounds
             bubbleView.layer.addSublayer(playerLayer!)
             
-            player.play()
-            
-            
+            player?.play()
             
             print("Attempting to play video....???")
         }
@@ -49,6 +48,7 @@ class ChatMessageCell: UICollectionViewCell {
         super.prepareForReuse()
         
         playerLayer?.removeFromSuperlayer()
+        player?.pause()
     }
     
     let textView: UITextView = {
