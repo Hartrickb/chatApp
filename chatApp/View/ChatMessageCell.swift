@@ -12,14 +12,21 @@ class ChatMessageCell: UICollectionViewCell {
     
     var chatLogController: ChatLogController?
     
-    let playButton: UIButton = {
-        let button = UIButton(type: .system)
+    lazy var playButton: UIButton = {
+        let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
         let image = #imageLiteral(resourceName: "play")
         button.tintColor = UIColor.white
         button.setImage(image, for: .normal)
+        
+        button.addTarget(self, action: #selector(handlePlay), for: .touchUpInside)
+        
         return button
     }()
+    
+    @objc func handlePlay() {
+        print("Play video")
+    }
     
     let textView: UITextView = {
         let tv = UITextView()
