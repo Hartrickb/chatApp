@@ -7,8 +7,11 @@
 //
 
 import UIKit
+import AVFoundation
 
 class ChatMessageCell: UICollectionViewCell {
+    
+    var message: Message?
     
     var chatLogController: ChatLogController?
     
@@ -24,8 +27,28 @@ class ChatMessageCell: UICollectionViewCell {
         return button
     }()
     
+    var playerLayer: AVPlayerLayer?
+    
     @objc func handlePlay() {
-        print("Play video")
+        if let videoUrlString = message?.videoUrl, let url = URL(string: videoUrlString) {
+            let player = AVPlayer(url: url)
+            
+            playerLayer = AVPlayerLayer(player: player)
+            playerLayer?.frame = bubbleView.bounds
+            bubbleView.layer.addSublayer(playerLayer!)
+            
+            player.play()
+            
+            
+            
+            print("Attempting to play video....???")
+        }
+    }
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        
+        playerLayer?.removeFromSuperlayer()
     }
     
     let textView: UITextView = {
