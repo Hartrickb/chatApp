@@ -15,6 +15,13 @@ class ChatMessageCell: UICollectionViewCell {
     
     var chatLogController: ChatLogController?
     
+    let activityIndicatorView: UIActivityIndicatorView = {
+        let aiv = UIActivityIndicatorView(activityIndicatorStyle: UIActivityIndicatorViewStyle.whiteLarge)
+        aiv.translatesAutoresizingMaskIntoConstraints = false
+        aiv.hidesWhenStopped = true
+        return aiv
+    }()
+    
     lazy var playButton: UIButton = {
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
@@ -39,6 +46,8 @@ class ChatMessageCell: UICollectionViewCell {
             bubbleView.layer.addSublayer(playerLayer!)
             
             player?.play()
+            activityIndicatorView.startAnimating()
+            playButton.isHidden = true
             
             print("Attempting to play video....???")
         }
@@ -49,6 +58,7 @@ class ChatMessageCell: UICollectionViewCell {
         
         playerLayer?.removeFromSuperlayer()
         player?.pause()
+        activityIndicatorView.stopAnimating()
     }
     
     let textView: UITextView = {
@@ -130,6 +140,13 @@ class ChatMessageCell: UICollectionViewCell {
         playButton.centerYAnchor.constraint(equalTo: bubbleView.centerYAnchor).isActive = true
         playButton.widthAnchor.constraint(equalToConstant: 50).isActive = true
         playButton.heightAnchor.constraint(equalToConstant: 50).isActive = true
+        
+        bubbleView.addSubview(activityIndicatorView)
+        // x, y, width, height
+        activityIndicatorView.centerXAnchor.constraint(equalTo: bubbleView.centerXAnchor).isActive = true
+        activityIndicatorView.centerYAnchor.constraint(equalTo: bubbleView.centerYAnchor).isActive = true
+        activityIndicatorView.widthAnchor.constraint(equalToConstant: 50).isActive = true
+        activityIndicatorView.heightAnchor.constraint(equalToConstant: 50).isActive = true
         
         // x, y, width, height
         profileImageView.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 8).isActive = true
