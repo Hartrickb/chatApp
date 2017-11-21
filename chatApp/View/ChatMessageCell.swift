@@ -105,6 +105,9 @@ class ChatMessageCell: UICollectionViewCell {
     }()
     
     @objc func handleZoomTap(tapGesture: UITapGestureRecognizer) {
+        if message?.videoUrl != nil {
+            return
+        }
         
         if let imageView = tapGesture.view as? UIImageView {
             
