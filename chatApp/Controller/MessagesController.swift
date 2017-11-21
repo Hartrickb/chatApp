@@ -26,6 +26,15 @@ class MessagesController: UITableViewController {
         
 //        observeMessages()
         
+        tableView.allowsMultipleSelectionDuringEditing = true
+    }
+    
+    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        return true
+    }
+    
+    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+        print(indexPath.row)
     }
     
     func observeUserMessages() {
