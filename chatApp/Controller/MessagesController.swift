@@ -79,6 +79,16 @@ class MessagesController: UITableViewController {
             }, withCancel: nil)
 
         }, withCancel: nil)
+        
+        ref.observe(.childRemoved, with: { (snapshot) in
+            
+            print(snapshot.key)
+            print(self.messagesDictionary)
+            
+            self.messagesDictionary.removeValue(forKey: snapshot.key)
+            self.attemptReloadOfTable()
+            
+        }, withCancel: nil)
     }
     
     private func fetchMessageWithMessageID(messageID: String) {
