@@ -370,6 +370,7 @@ class ChatLogController: UICollectionViewController, UITextFieldDelegate, UIColl
         print("handleSend")
         let properties = ["text": inputContainerView.inputTextField.text!] as [String: AnyObject]
         sendMessageWithProperties(properties: properties)
+        print("message sent")
         
     }
     
